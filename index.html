@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   </head>
   <body>
-    <div>
+    <div >
         <div style="display: flex;justify-content: center;">
             <h1>總價:</h1>
             <h1 id="price"></h1>
@@ -101,17 +101,29 @@
             tbody.innerHTML = ''
         })
 
+        function cancel(cancel_count,per_price,total_price){
+            document.getElementById(cancel_count).innerHTML = '';
+            document.getElementById(cancel_count).hidden = true;
+            per_price_reveal.innerText = parseInt(per_price_reveal.innerText) - per_price;
+            price_reveal.innerText =parseInt(price_reveal.innerText) -  total_price;
+
+            PER_price -= per_price;
+            current_total_price -= total_price;
+            
+            
+        }
+
         btn_save.addEventListener('click',()=>{
             count +=1;
             PER_price += parseInt(input_total_price.value)/parseInt(total_member.value);
 
             tbody.innerHTML += `
-            <tr>
+            <tr id="cancel${count}">
             <th scope="row">${count}</th>
             <td>${input_type.value}</td>
             <td>${input_productname.value}</td>
             <td>${parseInt(input_total_price.value)/parseInt(total_member.value)}</td>
-            <td></td>
+            <td><input type="button" value="X" onclick="cancel('cancel${count}',${parseInt(input_total_price.value)/parseInt(total_member.value)},${parseInt(input_total_price.value)})" ></td>
           </tr>
             `;
             current_total_price += parseInt(input_total_price.value);
