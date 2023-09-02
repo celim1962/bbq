@@ -13,6 +13,10 @@
             <h1>總價:</h1>
             <h1 id="price"></h1>
         </div>
+        <div style="display: flex;justify-content: center;">
+            <h1>每人單價:</h1>
+            <h1 id="per_price_reveal"></h1>
+        </div>
         <div style="margin-top: 1vh;">
             <input type="text" id="total_member" placeholder="人數" >
         </div>
@@ -64,6 +68,7 @@
           </div>
         </form>
       </div>
+    
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" id="btn_save" class="btn btn-primary">儲存</button>
@@ -76,6 +81,8 @@
       <script>
         let price_reveal = document.getElementById('price');//顯示總價
         let total_member = document.getElementById('total_member')//總人數
+        let PER_price = 0;//每人單價
+        let per_price_reveal = document.getElementById('per_price_reveal')//顯示每人單價
 
         let input_total_price = document.getElementById('input_total_price')//輸入總價
         let input_productname = document.getElementById('input_productname')//輸入產品名稱
@@ -96,6 +103,7 @@
 
         btn_save.addEventListener('click',()=>{
             count +=1;
+            PER_price += parseInt(input_total_price.value)/parseInt(total_member.value);
 
             tbody.innerHTML += `
             <tr>
@@ -103,10 +111,12 @@
             <td>${input_type.value}</td>
             <td>${input_productname.value}</td>
             <td>${parseInt(input_total_price.value)/parseInt(total_member.value)}</td>
+            <td></td>
           </tr>
             `;
             current_total_price += parseInt(input_total_price.value);
-          price_reveal.innerText = current_total_price
+          price_reveal.innerText = current_total_price;
+          per_price_reveal.innerText = PER_price;
         })
 
 
