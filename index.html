@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google" value="notranslate">
+    <title>烤肉用</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  </head>
+  <body>
+    <div style="display: flex; justify-content: space-around;">
+        <div style="display: flex;justify-content: center;">
+            <h1>總價:</h1>
+            <h1 id="price"></h1>
+        </div>
+        <div style="margin-top: 1vh;">
+            <input type="text" id="total_member" placeholder="人數" >
+        </div>
+        <div style="margin-top: 1vh;">
+            <input type="button" value="加入" id="btn_add" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+            <input type="button" value="清除" id="btn_clear">
+        </div>        
+    </div>
+
+
+    <table class="table table-striped">
+        <thead id="thead">
+          <tr>
+            <th scope="col">序號</th>
+            <th scope="col">種類</th>
+            <th scope="col">名稱</th>
+            <th scope="col">單價</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+      </table>
+
+
+
+      <!-- <button type="button" class="btn btn-primary" >Open modal for @mdo</button> -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">資訊</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">種類:</label>
+            <input type="text" class="form-control" id="input_type">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">名稱:</label>
+            <input type="text" class="form-control" id="input_productname">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">總價:</label>
+            <input type="text" class="form-control" id="input_total_price">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="btn_save" class="btn btn-primary">儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <script>
+        let price_reveal = document.getElementById('price');//顯示總價
+        let total_member = document.getElementById('total_member')//總人數
+
+        let input_total_price = document.getElementById('input_total_price')//輸入總價
+        let input_productname = document.getElementById('input_productname')//輸入產品名稱
+        let input_type = document.getElementById('input_type')//輸入產品種類
+
+        let btn_add = document.getElementById('btn_add')//加入按鈕
+        let btn_save = document.getElementById('btn_save')//儲存按鈕
+        let btn_clear = document.getElementById('btn_clear')//清除按鈕
+
+        let thead = document.getElementById('thead');
+        let tbody = document.getElementById('tbody');
+        let count = 0;
+        let current_total_price = 0;
+
+        btn_clear.addEventListener('click',()=>{
+            tbody.innerHTML = ''
+        })
+
+        btn_save.addEventListener('click',()=>{
+            count +=1;
+
+            tbody.innerHTML += `
+            <tr>
+            <th scope="row">${count}</th>
+            <td>${input_type.value}</td>
+            <td>${input_productname.value}</td>
+            <td>${parseInt(input_total_price.value)/parseInt(total_member.value)}</td>
+          </tr>
+            `;
+            current_total_price += parseInt(input_total_price.value);
+          price_reveal.innerText = current_total_price
+        })
+
+
+
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  </body>
+</html>
